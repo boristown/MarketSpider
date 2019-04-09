@@ -10,12 +10,6 @@ crypto_path = os.path.join(html_path, "*Crypto*.htm")
 crypto_pattern = r'<tr.+?rank\sicon">(\d+)<.+?title="(.+?)".+?title="(.+?)".+?pid-(\d+)-last.+?</tr>'
 dirs = glob.glob( crypto_path )
 
-candles_filename = os.path.join('Crypto_Candles_' + datetime.datetime.utcnow().strftime("%Y%m%d") + '.txt')
-candles_file = open(candles_filename, "w")
-candles_file.truncate()
-candles_line = ''
-candles_line = "Symbol\tDate\tClose\tOpen\tHigh\tLow\tVol"
-candles_file.write(candles_line+'\n')
 
 url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
@@ -33,19 +27,23 @@ lines_count = 0
 symbols_count = 0
 for file_path in dirs:
     print( file_path )
-    print( candles_line )
+    #print( candles_line )
     file = open( file_path, "r", encoding="utf-8" )
     file_str = file.read()
-    matchs_str = re.finditer(crypto_pattern,file_str,re.S)
+    symbols_match = re.finditer(crypto_pattern,file_str,re.S)
     symbol_index = 0
-    #matchs_str_list = list(matchs_str)
-    for match_str in matchs_str:
-        time.sleep(3)
+    #symbols_match_list = list(symbols_match)
+    for symbol_match in symbols_match:
         symbol_index+=1
-        #progress_str = "[" + str(symbol_index) + "/" + str(len(matchs_str_list)) + "]"
-        curr_id_str = match_str.group(4)
+        #progress_str = "[" + str(symbol_index) + "/" + str(len(symbols_match_list)) + "]"
+        curr_id_str = symbol_match.group(4)
         if int(curr_id_str) < 1:
            continue
+        symbol_str = symbol_match.group(3) + "_USD"
+        candles_filename = os.path.join('Output/' + symbol_str + datetime.datetime.utcnow().strftime("%Y%m%d") + '.txt')
+        if os.path.exists(candles_filename):
+            continue
+        time.sleep(5)
         payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=04%2F09%2F2019&header=null&interval_sec=Daily&smlID=25738435&sort_col=date&sort_ord=DESC&st_date=04%2F08%2F2000"
         response = requests.request("POST", url, data=payload, headers=headers)
         table_pattern = r'<tr>.+?<td.+?data-real-value="([^><"]+?)".+?</td>' \
@@ -53,10 +51,15 @@ for file_path in dirs:
         '.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>'  \
         '.+?data-real-value="([^><"]+?)".+?</td>'
         row_matchs = re.finditer(table_pattern,response.text,re.S)
-        symbol_str = match_str.group(3) + "_USD"
+        candles_file = open(candles_filename, "w")
+        candles_file.truncate()
+        candles_line = ''
+        #candles_line = "Symbol\tDate\tClose\tOpen\tHigh\tLow\tVol"
+        #candles_file.write(candles_line+'\n')
+
         #row_matchs_list = list(row_matchs)
-        #print( progress_str + "\t" + curr_id_str + "\t" + match_str.group(1)+ "\t" + symbol_str+ "\t" + match_str.group(2)  + "\tLines="  + str(len(row_matchs_list)))
-        #print( curr_id_str + "\t" + match_str.group(1)+ "\t" + symbol_str+ "\t" + match_str.group(2)  + "\tLines="  + str(len(row_matchs_list)))
+        #print( progress_str + "\t" + curr_id_str + "\t" + symbol_match.group(1)+ "\t" + symbol_str+ "\t" + symbol_match.group(2)  + "\tLines="  + str(len(row_matchs_list)))
+        #print( curr_id_str + "\t" + symbol_match.group(1)+ "\t" + symbol_str+ "\t" + symbol_match.group(2)  + "\tLines="  + str(len(row_matchs_list)))
         #lines_count += len(row_matchs_list)
         symbols_count += 1
         row_count = 0
@@ -67,7 +70,7 @@ for file_path in dirs:
             print( candles_line )
             row_count += 1
         lines_count += row_count
-        print( curr_id_str + "\t" + match_str.group(1)+ "\t" + symbol_str+ "\t" + match_str.group(2)  + "\tLines="  + str(row_count))
+        candles_file.close()
+        print( curr_id_str + "\t" + symbol_match.group(1)+ "\t" + symbol_str+ "\t" + symbol_match.group(2)  + "\tLines="  + str(row_count))
 
 print( "Symbols Count:" + str(symbols_count) +  "\tLines Count:" + str(lines_count))
-candles_file.close()
