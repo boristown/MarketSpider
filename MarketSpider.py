@@ -2,6 +2,7 @@ import os
 import glob
 import re
 import requests
+import datetime
 
 html_path = "HTML/"
 crypto_path = os.path.join(html_path, "*Crypto*.htm")
@@ -23,12 +24,17 @@ headers = {
     }
 
 response = requests.request("POST", url, data=payload, headers=headers)
-table_pattern = r'<tr>.+?<td.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>' 
+
+table_pattern = r'<tr>.+?<td.+?data-real-value="([^><"]+?)".+?</td>' \
+'.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>'  \
+'.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>'  \
+'.+?data-real-value="([^><"]+?)".+?</td>' 
+
 row_matchs = re.finditer(table_pattern,response.text,re.S)
 print( "Date" + "\t" + "Price" + "\t" + "Open" + "\t" + "High" + "\t" + "Low" + "\t" + "Vol")
 for cell_matchs in row_matchs:
-    print( cell_matchs.group(1) + "\t" + cell_matchs.group(2) + "\t" + cell_matchs.group(3) + "\t" + cell_matchs.group(4) + "\t" + cell_matchs.group(5) + "\t" + cell_matchs.group(6))
-
+    date_string =  datetime.datetime.utcfromtimestamp((int)(cell_matchs.group(1))).strftime("%Y-%m-%d")
+    print(  date_string + "\t" + cell_matchs.group(2) + "\t" + cell_matchs.group(3) + "\t" + cell_matchs.group(4) + "\t" + cell_matchs.group(5) + "\t" + cell_matchs.group(6))
 
 for file_path in dirs:
     print( file_path )
