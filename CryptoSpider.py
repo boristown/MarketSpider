@@ -27,15 +27,12 @@ lines_count = 0
 symbols_count = 0
 for file_path in dirs:
     print( file_path )
-    #print( candles_line )
     file = open( file_path, "r", encoding="utf-8" )
     file_str = file.read()
     symbols_match = re.finditer(crypto_pattern,file_str,re.S)
     symbol_index = 0
-    #symbols_match_list = list(symbols_match)
     for symbol_match in symbols_match:
         symbol_index+=1
-        #progress_str = "[" + str(symbol_index) + "/" + str(len(symbols_match_list)) + "]"
         curr_id_str = symbol_match.group(4)
         if int(curr_id_str) < 1:
            continue
@@ -54,13 +51,6 @@ for file_path in dirs:
         candles_file = open(candles_filename, "w")
         candles_file.truncate()
         candles_line = ''
-        #candles_line = "Symbol\tDate\tClose\tOpen\tHigh\tLow\tVol"
-        #candles_file.write(candles_line+'\n')
-
-        #row_matchs_list = list(row_matchs)
-        #print( progress_str + "\t" + curr_id_str + "\t" + symbol_match.group(1)+ "\t" + symbol_str+ "\t" + symbol_match.group(2)  + "\tLines="  + str(len(row_matchs_list)))
-        #print( curr_id_str + "\t" + symbol_match.group(1)+ "\t" + symbol_str+ "\t" + symbol_match.group(2)  + "\tLines="  + str(len(row_matchs_list)))
-        #lines_count += len(row_matchs_list)
         symbols_count += 1
         row_count = 0
         for cell_matchs in row_matchs:
