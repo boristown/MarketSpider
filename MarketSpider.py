@@ -1,7 +1,6 @@
 import os
 import glob
 import re
-import http.client
 import requests
 
 html_path = "HTML/"
@@ -12,7 +11,7 @@ dirs = glob.glob( crypto_path )
 
 url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
-payload = "action=historical_data&curr_id=1057391&end_date=04%2F09%2F2019&header=null&interval_sec=Daily&smlID=25738435&sort_col=date&sort_ord=DESC&st_date=04%2F08%2F2019"
+payload = "action=historical_data&curr_id=1057391&end_date=04%2F09%2F2019&header=null&interval_sec=Daily&smlID=25738435&sort_col=date&sort_ord=DESC&st_date=04%2F08%2F2018"
 headers = {
     'accept': "text/plain, */*; q=0.01",
     'origin': "https://www.investing.com",
@@ -24,8 +23,12 @@ headers = {
     }
 
 response = requests.request("POST", url, data=payload, headers=headers)
+table_pattern = r'<tr>.+?<td.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>' 
+row_matchs = re.finditer(table_pattern,response.text,re.S)
+print( "Date" + "\t" + "Price" + "\t" + "Open" + "\t" + "High" + "\t" + "Low" + "\t" + "Vol")
+for cell_matchs in row_matchs:
+    print( cell_matchs.group(1) + "\t" + cell_matchs.group(2) + "\t" + cell_matchs.group(3) + "\t" + cell_matchs.group(4) + "\t" + cell_matchs.group(5) + "\t" + cell_matchs.group(6))
 
-print(response.text)
 
 for file_path in dirs:
     print( file_path )
