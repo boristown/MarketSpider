@@ -31,10 +31,21 @@ table_pattern = r'<tr>.+?<td.+?data-real-value="([^><"]+?)".+?</td>' \
 '.+?data-real-value="([^><"]+?)".+?</td>' 
 
 row_matchs = re.finditer(table_pattern,response.text,re.S)
-print( "Date" + "\t" + "Price" + "\t" + "Open" + "\t" + "High" + "\t" + "Low" + "\t" + "Vol")
+
+candles_filename = os.path.join('Crypto_Candles_' + datetime.datetime.utcnow().strftime("%Y%m%d") + '.txt')
+candles_file = open(candles_filename, "w")
+candles_file.truncate()
+candles_line = ''
+candles_line = "Symbol\tDate\tClose\tOpen\tHigh\tLow\tVol"
+candles_file.write(candles_line+'\n')
+print( candles_line )
 for cell_matchs in row_matchs:
     date_string =  datetime.datetime.utcfromtimestamp((int)(cell_matchs.group(1))).strftime("%Y-%m-%d")
-    print(  date_string + "\t" + cell_matchs.group(2) + "\t" + cell_matchs.group(3) + "\t" + cell_matchs.group(4) + "\t" + cell_matchs.group(5) + "\t" + cell_matchs.group(6))
+    candles_line =  "BTC_USD" + "\t" + date_string + "\t" + cell_matchs.group(2) + "\t" + cell_matchs.group(3) + "\t" + cell_matchs.group(4) + "\t" + cell_matchs.group(5) + "\t" + cell_matchs.group(6)
+    candles_file.write(candles_line+'\n')
+    print( candles_line )
+
+candles_file.close()
 
 for file_path in dirs:
     print( file_path )
