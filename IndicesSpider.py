@@ -43,19 +43,26 @@ for file_path in dirs:
         row_count = 0
         symbols_count += 1
         st_date_str = "12%2F31%2F1949"
-        while st_date_str != "null":
-            time.sleep(5)
-            payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=" + end_date_str + "&header=Historical Data&interval_sec=Daily&smlID=2057370&sort_col=date&sort_ord=DESC&st_date=" + st_date_str
-            #response = requests.request("POST", url, data=payload, headers=headers)
-            response = requests.post(url, data=payload, headers=headers)
+        candles_file = open(candles_filename, "w")
+        candles_file.truncate()
+        candles_line = ''
+        while st_date_str != "null" and st_date_str != "":
+            time.sleep(6)
+            payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=" + end_date_str + "&header=null&interval_sec=Daily&smlID=2057370&sort_col=date&sort_ord=DESC&st_date=" + st_date_str
+            print( payload )
+            while True:
+                try:
+                    response = requests.request("POST", url, data=payload, headers=headers, verify=False)
+                    break
+                except:
+                    print("Retry after 15 seconds……")
+                    time.sleep(15)
+            #response = requests.post(url, data=payload, headers=headers, verify=False)
             table_pattern = r'<tr>.+?<td.+?data-real-value="([^><"]+?)".+?</td>' \
             '.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>'  \
             '.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>'  \
             '.+?data-real-value="([^><"]+?)".+?</td>'
             row_matchs = re.finditer(table_pattern,response.text,re.S)
-            candles_file = open(candles_filename, "w")
-            candles_file.truncate()
-            candles_line = ''
             st_date_str = ""
             for cell_matchs in row_matchs:
                 row_date = datetime.datetime.utcfromtimestamp((int)(cell_matchs.group(1)))
