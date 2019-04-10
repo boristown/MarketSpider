@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>e24de8b7-5331-4be8-9995-1f53d3f21bc8</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MarketSpider.py</StartupFile>
+    <StartupFile>IndicesSpider.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MarketSpider.py" />
+    <Compile Include="CryptoSpider.py" />
+    <Compile Include="IndicesSpider.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
