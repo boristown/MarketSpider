@@ -1,0 +1,111 @@
+/*header*/
+(function(d, w){
+  var TN8 = w.TN8 = (w.TN8 || {}), s;
+  if (!TN8.lq) {
+    TN8.lq = TN8.lq || [];
+    s = d.createElement('script');
+    s.src = w.location.protocol+"//ad-cdn.technoratimedia.com/lib.js";
+    d.head.appendChild(s);
+  }
+}(document, window));
+
+window['TMX11428226230028823'] = function() {
+};
+
+document.write('<!-- Creative null served by the TMX platform via Synacor -->');
+var varTmxRequestId='11428226230028823';
+var varQueryAdSize='300x600';
+var varChannelIDs='';
+var tmIsSecure=(document.location.protocol=='https:');
+
+function doPsa() {
+  document.write('<scr' + 'ipt type="text/javascript" src="//ad-cdn.technoratimedia.com/psa/psa.js"></scr' + 'ipt>');;
+  document.write('<img style="border:0;width:0;height:0;visibility:hidden;display:none;" src="' + (tmIsSecure ? 'https' : 'http') + '://uat-net.technoratimedia.com/pixel?rid=11428226230028823&id=3&bid=TMX&mkt=2&sz=' + varQueryAdSize + '">');
+  window['TMX11428226230028823'] && window['TMX11428226230028823']({
+    requestId: '11428226230028823',
+ 	result: 'PSA'
+  });
+}
+function doPassback() {
+  document.write('<!-- START SYND TAG -->\n<script>\nvar c1={\n    \"placementId\": 82456,\n    \"siteId\": 93619,\n    \"product\": {\n        \"productName\": \"slideshow\",\n        \"slideshow\": {\n            \"topic\": [\n                \"national_monuments\"\n            ],\n            \"slideOrder\": \"random\",\n            \"slideDuration\": 10250,\n            \"slidesPerAd\": 2,\n            \"adDuration\": 10500,\n            \"layout\": \"rotation\",\n            \"adPrefixEnabled\": true\n        }\n    },\n    \"placement\": {\n        \"placementType\": \"static\",\n        \"static\": {\n            \"size\": {\n                \"width\": \"300px\",\n                \"height\": \"300px\"\n            }\n        }\n    }\n},\nc2={\n    \"placementId\": 82457,\n    \"siteId\": 93619,\n    \"product\": {\n        \"productName\": \"trivia\",\n        \"trivia\": {\n            \"tags\": [\n                \"general\"\n            ],\n                                                \"duration\": {\n                \"questionScreen\": {\n                    \"engaged\": 10000,\n                    \"disengaged\": 10250\n                },\n                \"answerScreen\": {\n                    \"engaged\": 7000,\n                    \"disengaged\": 10250\n                },\n                \"adScreen\": {\n                    \"engaged\": 10500,\n                    \"disengaged\": 10500\n                }\n            },\n            \"adPrefixEnabled\": true                                    \n        }\n    },\n    \"placement\": {\n        \"placementType\": \"static\",\n        \"static\": {\n            \"size\": {\n                \"width\": \"300px\",\n                \"height\": \"300px\"\n            }\n        }\n    }\n},l=\"https:\/\/synadproducts.synacormedia.com\/\";if(\"undefined\"!=typeof localStorage&&localStorage.syndConfig)try{var co=JSON.parse(localStorage.syndConfig);\"object\"==typeof co && \"object\"==typeof co.config && \"string\"==typeof co.config.libUrl && \"\"!==co.config.libUrl &&(l=co.config.libUrl,console&&console.log&&console.log(\"Loading synacor-syndication.js from: \"+l))}catch(o){}var s=document.createElement(\"script\");s.setAttribute(\"src\",l+\"synacor-syndication.js\"),s.async=!0,s.onload=function(){insertSynacorAdProduct(c1),insertSynacorAdProduct(c2)},document.head.appendChild(s);\n<\/script>\n<!-- END SYND TAG -->')
+  document.write('<img style="border:0;width:0;height:0;visibility:hidden;display:none;" src="' + (tmIsSecure ? 'https' : 'http') + '://uat-net.technoratimedia.com/pixel?rid=11428226230028823&id=4&bid=TMX&mkt=2&sz=' + varQueryAdSize + '">');
+  window['TMX11428226230028823'] && window['TMX11428226230028823']({
+ 	 requestId: '11428226230028823',
+ 	 result: 'PASSBACK'
+  });
+}
+if ('PASSBACK'=='PASSBACK') {
+  doPassback();
+} else {
+  doPsa();
+}
+
+window.addEventListener("message", function(event) {
+    try {
+        var data = JSON.parse(event.data);
+        if (data.googMsgType == "adpnt") {
+            //we got fill so let's record it somehow
+        }
+        if (data.rid === varTmxRequestId && data.result === "adx-passback") {
+           doPsa()
+        }
+    } catch(e) {
+        //not json?
+    }
+}, false);TN8.lq.push(function() {
+
+if(window.varPixel108==undefined){
+window.varPixel108=1;
+/*Lotame*/
+var syncLtWindow;
+try {
+  if(window.top.document) {
+    syncLtWindow = window.top;
+  }
+} catch(err) {
+  syncLtWindow = window;
+}
+if(!syncLtWindow.syncLtFired) {
+	syncLtWindow.syncLtFired=true;
+	window.TM_LOTEM_ONLOAD = function() {
+		var domainRegex = /([a-zA-Z0-9_-]+)\.([a-zA-Z]+)\/(([a-zA-Z0-9_-]+)(\/([a-zA-Z0-9_-]+))?)?/
+		var matches = domainRegex.exec('https:\/\/www.investing.com\/equities\/sweden');
+		var applyTemplate = function(template) {
+			return template.replace(/\$(\d+)/g, function(c, m) {
+				return matches[m] === undefined ? c : matches[m];
+			});
+		};
+		_cc12247.runOptimus = false;
+		if (matches && matches.length > 1 && matches[1]) {
+			_cc12247.add("int", applyTemplate("$1 : Total Site Traffic"));
+		}
+		if (matches && matches.length > 4 && matches[4]) {
+			_cc12247.add("int", applyTemplate("$1 : Site Section : $4"));
+		}
+		if (matches && matches.length > 6 && matches[6]) {
+			_cc12247.add("int", applyTemplate("$1 : Site Section : $4 : $6"));
+		}
+		_cc12247.bcp(); 
+	}
+	document.write('<scr'+'ipt type="text/javascript" src="//tags.crwdcntrl.net/c/12247/cc.js?ns=_cc12247" id="LOTCC_12247" onload="TM_LOTEM_ONLOAD()"></scr'+'ipt>');
+}
+}
+if(window.varPixel19==undefined){
+window.varPixel19=1;
+TN8.tag.dropIFScript(document.location.protocol +'//aa.agkn.com/adscores/r.js?sid=9209810687');
+}
+});
+/*footer*/
+setTimeout(function() {
+  TN8.lq.push(function() { 
+    var mpos = TN8.viewability.getMoat();
+    var apos = TN8.viewability.getAceView();
+    TN8.tag.dropPixel(window.location.protocol+'//uat-net.technoratimedia.com/pixel?rid=11428226230028823&id=9&mpos='+mpos+'&apos='+apos);
+  });
+},2000);
+if (!document.getElementById('tn8UserSync')) {
+    TN8.lq.push(function() {
+         TN8.tag.dropIFPixel(window.location.protocol + '//ad-cdn.technoratimedia.com/html/usersync.html');
+    });
+}
+/*end footer*/

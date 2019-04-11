@@ -1,0 +1,247 @@
+/* Jul 13th 2014 - L.H */
+/* Custom Cursors */
+/* Tables and such */
+/* $left-column-width:round(percentage(636px / $site-width)); //636 */
+/* $left-column-width:round($site-width / 100 * 66.53); //636 */
+/* Will devide 100% while the corrent won't */
+/* $right-column-width: round(percentage(300px / $site-width)); //300 */
+/* $right-column-width:round($site-width / 100 * 31.38); //300 */
+/* $left-column-wide-width:round(percentage(816px / $site-width)); //816 */
+/* $left-column-wide-width:round($site-width / 100 * 85.36); //816 */
+/* $right-column-wide-width: round(percentage(120px / $site-width)); //120 */
+/* $right-column-wide-width:round($site-width / 100 * 12.55); //120 */
+/* flex mixin for flex containers!
+
+Parameter list example - all defaults  @include newFlexbox(flex, row, nowrap, flex-start, stretch)
+
+When using this mixin, always send 5 params. If there's a property you don't need to be printed for your rule, pass the default value listed above.
+Example: @include newFlexbox(inline-flex, column, nowrap, flex-start, stretch). In this example, flex-wrap, justify-content and align-items will not be printed because they are all defaults.
+If you DO need the mixin to print out a default value for specificity reasons, pass the word "default" for that param. The default value will be printed.
+Example: @include newFlexbox(inline-flex, default, nowrap, flex-start, stretch). In this example, flex-direction:row will be printed despite being a default.
+*/
+.clear {
+  clear: both; }
+
+.ceFlags, .grayFullBullishIcon, .grayEmptyBullishIcon, .sandClock, .audioIconNew, .smallGrayP, .diamondNewIcon, .theDay {
+  -webkit-print-color-adjust: exact; }
+
+.printedTopHeader {
+  display: block; }
+
+* {
+  float: none;
+  /*position:static !important;*/
+  /*width:auto !important;*/
+  border: none !important;
+  background: none; }
+
+.wrapper {
+  padding: 0 !important; }
+
+.androidAppTakeover {
+  background: none; }
+
+.topBar, #wideBanner, .topHeader, .midHeader, .bannerHeader, .bottomHeader, #navBar, #contentSideBar, #pdfBox, #youTubeBox, #contentSectionTabsMenu, .contentSectionTabsBottom #socialWidget, #findABroker, #rightColumn, #footerWrapper, .commentsWrapperAnalysis, .socialWidgetBottomBox, .mainEcoAd, .h1Button, .socialWidgets, .tools_footer_container, .innerHeaderSeperatorBottom, .ecoAutoUpdateText, .contentSectionDetails, .articlePage #socialWidget, .printIconWrap, .fontSizeControllerWrapper, .topAlertMsg, .wideBannerBottom, #officeOnlyQueries, .grayClockIcon, .calendarWidget, iframe {
+  display: none; }
+
+.earAdv, .floatingHeader {
+  display: none !important; }
+
+.wrapper, #leftColumn, #contentSection, .contentSectionTabsBottom {
+  width: 100% !important; }
+
+.wrapper {
+  padding: 0; }
+
+h1 {
+  font-size: 30px !important; }
+
+.contentSectionDetails {
+  font-size: 14px !important; }
+
+.WYSIWYG, .WYSIWYG H5 {
+  font-size: 12px !important; }
+
+.contentMediaBoxBottom a {
+  font-size: 11px !important; }
+
+#leftColumn {
+  margin-left: 0; }
+
+.contentSectionTabsBottom {
+  border-top: 0; }
+
+.contentSectionTabsBottom iframe, .contentSectionTabsBottom img {
+  height: 100%;
+  width: 100%; }
+
+.contentMediaBox {
+  margin: 25px auto;
+  text-align: center;
+  width: 100%; }
+
+.WYSIWYG .newSiteIconsSprite {
+  display: none; }
+
+.WYSIWYG UL {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding: 6px;
+  margin: 5px 7px 0 15px; }
+
+.WYSIWYG UL LI {
+  background: none;
+  list-style-type: disc;
+  padding: 0;
+  margin: 7px; }
+
+.articlePage #contentSection {
+  margin-top: 0; }
+
+H1, .printedTopHeader .headerTitle {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0 -1px 1px -1px; }
+
+/* needs to be put back for the article page */
+.disclaimerBox {
+  max-height: 100%; }
+
+.instrumentFloater,
+.OUTBRAIN,
+.addAComment,
+.articleControl,
+.articleFooter,
+.breakingNews {
+  display: none !important; }
+
+.articleFooter + .doubleLineSeperator + H2 {
+  display: none; }
+
+.eCalNew .ecoButtonLine A, .eCalNew #ecoCalTabsMenu, .eCalNew .notification {
+  display: none; }
+
+.ecoButtonLine {
+  margin: 0; }
+
+.ecoCalTbl {
+  page-break-after: auto;
+  font-size: 13px;
+  border: 1px solid #bababa !important;
+  width: 100% !important; }
+  .ecoCalTbl TR {
+    page-break-inside: avoid; }
+  .ecoCalTbl TD {
+    page-break-inside: avoid;
+    border-top: 1px solid #dadada !important;
+    background-color: #fff !important; }
+    .ecoCalTbl TD.theDay {
+      background-color: #F2F2F2 !important;
+      color: #3F4A54;
+      border-top: 1px solid #bababa !important;
+      line-height: 19px; }
+  .ecoCalTbl TR.noHover {
+    display: none !important; }
+  .ecoCalTbl TR:hover .grayEmptyBullishIcon, .ecoCalTbl TR.openedTr .grayEmptyBullishIcon {
+    background-position: -5px -1059px !important; }
+  .ecoCalTbl .flagCur {
+    width: 10%; }
+  .ecoCalTbl .imp {
+    width: 10%; }
+  .ecoCalTbl .event {
+    width: 40%; }
+  .ecoCalTbl .act {
+    width: 10%; }
+  .ecoCalTbl .time {
+    width: 10%; }
+  .ecoCalTbl .prev {
+    width: 10%; }
+  .ecoCalTbl .last {
+    width: 1%; }
+
+.printedTopHeader {
+  width: 100%; }
+  .printedTopHeader .logo {
+    text-align: left;
+    margin: 0 4px; }
+  .printedTopHeader .url {
+    line-height: 24px;
+    text-align: right; }
+  .printedTopHeader .headerTitle {
+    margin: 14px 0 20px;
+    display: block;
+    font-size: 30px; }
+
+.printedHeader {
+  font-size: 28px;
+  font-weight: bold; }
+
+.ecoCurrentTime {
+  padding: 0;
+  float: none; }
+  .ecoCurrentTime:hover {
+    cursor: default;
+    background: none; }
+  .ecoCurrentTime .dropDownArrowGray {
+    display: none; }
+
+.buttonLine {
+  height: 0; }
+  .buttonLine A, .buttonLine .datePickerIconWrap {
+    display: none; }
+  .buttonLine .calendarDatePicker {
+    width: auto; }
+    .buttonLine .calendarDatePicker .dateField {
+      text-align: right; }
+    .buttonLine .calendarDatePicker .dateField .dateRange {
+      padding: 0; }
+
+.eCalMainNew .buttonLine {
+  margin-top: 0; }
+
+.ecoTimeAndText {
+  margin-top: 4px; }
+
+.eCalNew TABLE.ecoCalTbl {
+  margin-top: 5px; }
+
+.printedQR {
+  margin: 6px 0;
+  text-align: right; }
+  .printedQR img {
+    width: 100px;
+    height: 100px; }
+
+.ecoCalLegend_1 {
+  border-right: 1px solid #dadada !important; }
+
+.ecoCalLegend_3 {
+  border-left: 1px solid #dadada !important; }
+
+.ecoCalLegend {
+  margin-top: 16px;
+  page-break-before: auto;
+  page-break-inside: avoid; }
+
+.disclaimerBox {
+  border: 1px solid #cccccc !important;
+  height: auto !important;
+  page-break-after: auto;
+  page-break-inside: avoid; }
+
+.ecoDivLine {
+  border-style: solid !important;
+  border-color: #bababa !important;
+  border-width: 1px 0 0 0 !important;
+  height: 1px; }
+
+.diamondNewIcon .displayNone {
+  display: inline; }
+
+.genNotification {
+  display: none; }
+
+.userDataPopup {
+  display: none; }
+
+/*# sourceMappingURL=printContent.css.map */
