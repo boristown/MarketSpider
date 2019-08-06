@@ -1,0 +1,2 @@
+python EquitiesSpider.py
+pause

@@ -6,21 +6,21 @@ import datetime
 import time
 
 html_path = "HTML/"
-crypto_path = os.path.join(html_path, "*Crypto*.htm")
+crypto_path = os.path.join(html_path, "*Crypto*.htm*")
 crypto_pattern = r'<tr.+?rank\sicon">(\d+)<.+?title="(.+?)".+?title="(.+?)".+?pid-(\d+)-last.+?</tr>'
 dirs = glob.glob( crypto_path )
 
 
-url = "https://www.investing.com/instruments/HistoricalDataAjax"
+url = "https://cn.investing.com/instruments/HistoricalDataAjax"
 
 headers = {
     'accept': "text/plain, */*; q=0.01",
-    'origin': "https://www.investing.com",
+    'origin': "https://cn.investing.com",
     'x-requested-with': "XMLHttpRequest",
     'user-agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
     'content-type': "application/x-www-form-urlencoded",
     'cache-control': "no-cache",
-    'postman-token': "e085dd1a-2c0b-5cd8-6098-f8dd8d1b5e37"
+    'postman-token': "001488ed-8887-c84a-887c-ee407f04ea78"
     }
 
 lines_count = 0
@@ -41,7 +41,7 @@ for file_path in dirs:
         if os.path.exists(candles_filename):
             continue
         time.sleep(5)
-        payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=04%2F09%2F2019&header=null&interval_sec=Daily&smlID=25738435&sort_col=date&sort_ord=DESC&st_date=04%2F08%2F2000"
+        payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=2019%2F07%2F28&header=null&interval_sec=Daily&smlID=25609848&sort_col=date&sort_ord=DESC&st_date=2000%2F04%2F08"
         response = requests.request("POST", url, data=payload, headers=headers)
         table_pattern = r'<tr>.+?<td.+?data-real-value="([^><"]+?)".+?</td>' \
         '.+?data-real-value="([^><"]+?)".+?</td>.+?data-real-value="([^><"]+?)".+?</td>'  \
@@ -57,7 +57,7 @@ for file_path in dirs:
             date_string =  datetime.datetime.utcfromtimestamp((int)(cell_matchs.group(1))).strftime("%Y-%m-%d")
             candles_line =  symbol_str + "\t" + date_string + "\t" + cell_matchs.group(2) + "\t" + cell_matchs.group(3) + "\t" + cell_matchs.group(4) + "\t" + cell_matchs.group(5) + "\t" + cell_matchs.group(6)
             candles_file.write(candles_line+'\n')
-            print( candles_line )
+            # print( candles_line )
             row_count += 1
         lines_count += row_count
         candles_file.close()

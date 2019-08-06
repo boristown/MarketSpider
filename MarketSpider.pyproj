@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>e24de8b7-5331-4be8-9995-1f53d3f21bc8</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>EquitiesSpider.py</StartupFile>
+    <StartupFile>IndicesSpider.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="CommoditiesSpider.py" />
     <Compile Include="CryptoSpider.py" />
+    <Compile Include="CurrenciesSpider.py" />
     <Compile Include="EquitiesSpider.py" />
     <Compile Include="IndicesSpider.py" />
   </ItemGroup>

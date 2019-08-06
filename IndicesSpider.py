@@ -5,9 +5,25 @@ import requests
 import datetime
 import time
 
+'''
+<tr>
+    <td class="flag"><span title="美国" class="ceFlags USA">&nbsp;</span></td>
+    <td class="bold left plusIconTd noWrap elp"><a title="VIX恐慌指数" href="/indices/volatility-s-p-500" target="_blank" boundblank="">VIX恐慌指数</a>
+    <span class="alertBellGrayPlus js-plus-icon genToolTip oneliner" data-tooltip="创建提醒" data-name="VIX恐慌指数" data-id="44336"></span></td>
+		        <td class="pid-44336-last">12.16</td>
+                <td class="pid-44336-high">12.72</td>
+    <td class="pid-44336-low">12.01</td>
+    <td class="bold redFont pid-44336-pc">0.00</td>
+    <td class="bold redFont pid-44336-pcp">0.00%</td>
+    <td class="pid-44336-time" data-value="1564172098">27/07</td>
+    <td class="icon"><span class="redClockIcon">&nbsp;</span></td>
+</tr>
+'''
+
 html_path = "HTML/"
-indices_path = os.path.join(html_path, "*Indices*.htm")
-indices_pattern = r'<tr\sid="pair_(\d+)">.+?span\stitle="([^><"]+)".+?indices/([^><"]+)"\stitle="([^><"]+)".+?</tr>'
+indices_path = os.path.join(html_path, "*Indices*.htm*")
+#indices_pattern = r'<tr\sid="pair_(\d+)">.+?span\stitle="([^><"]+)".+?indices/([^><"]+)"\stitle="([^><"]+)".+?</tr>'
+indices_pattern = r'<td\sclass="flag"><span\stitle="([^><"]+)".+?><a\stitle="([^><"]+)".+?data-id="(\d+)">.+?</tr>'
 dirs = glob.glob( indices_path )
 
 url = "https://www.investing.com/instruments/HistoricalDataAjax"
@@ -19,7 +35,7 @@ headers = {
     'user-agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
     'content-type': "application/x-www-form-urlencoded",
     'cache-control': "no-cache",
-    'postman-token': "1cc17485-bf05-d8e5-c58a-13637b1e254d"
+    'postman-token': "70441f40-9f53-64b9-1e45-240be75afb7d"
     }
 
 lines_count = 0
@@ -33,11 +49,11 @@ for file_path in dirs:
     end_date_str = (datetime.datetime.utcnow() + datetime.timedelta(days = -1)).strftime("%m-%d-%Y").replace("-","%2F")
     for symbol_match in symbols_match:
         symbol_index+=1
-        curr_id_str = symbol_match.group(1)
+        curr_id_str = symbol_match.group(3)
         if int(curr_id_str) < 1:
            continue
-        symbol_str = "Indices_" + symbol_match.group(3)
-        candles_filename = os.path.join('Output/Indices/' + symbol_str + "_" + datetime.datetime.utcnow().strftime("%Y%m%d") + '.txt')
+        symbol_str = "Indices_" + symbol_match.group(2).replace("&amp;","").replace("/","")
+        candles_filename = os.path.join('Output/Indices/' + symbol_str + "_" + datetime.datetime.utcnow().strftime("%m%d%Y") + '.txt')
         if os.path.exists(candles_filename):
             continue
         row_count = 0
@@ -48,7 +64,7 @@ for file_path in dirs:
         candles_line = ''
         while st_date_str != "null" and st_date_str != "":
             time.sleep(6)
-            payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=" + end_date_str + "&header=null&interval_sec=Daily&smlID=2057370&sort_col=date&sort_ord=DESC&st_date=" + st_date_str
+            payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=" + end_date_str + "&header=null&interval_sec=Daily&smlID=2030170&sort_col=date&sort_ord=DESC&st_date=" + st_date_str
             print( payload )
             while True:
                 try:
@@ -72,13 +88,13 @@ for file_path in dirs:
                         st_date_str = row_next_date.strftime("%m-%d-%Y").replace("-","%2F")
                     else:
                         st_date_str = "null"
-                date_string =  row_date.strftime("%Y-%m-%d")
+                date_string =  row_date.strftime("%m-%d-%Y")
                 candles_line =  symbol_str + "\t" + date_string + "\t" + cell_matchs.group(2) + "\t" + cell_matchs.group(3) + "\t" + cell_matchs.group(4) + "\t" + cell_matchs.group(5) + "\t" + cell_matchs.group(6)
                 candles_file.write(candles_line+'\n')
                 print( candles_line )
                 row_count += 1
         lines_count += row_count
         candles_file.close()
-        print( curr_id_str + "\t" + symbol_match.group(2)+ "\t" + symbol_str+ "\t" + symbol_match.group(4)  + "\tLines="  + str(row_count))
+        print( curr_id_str + "\t" + symbol_match.group(1)+ "\t" + symbol_str+ "\t" + symbol_match.group(2).replace("&amp;","").replace("/","")  + "\tLines="  + str(row_count))
 
 print( "Symbols Count:" + str(symbols_count) +  "\tLines Count:" + str(lines_count))

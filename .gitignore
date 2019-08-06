@@ -113,3 +113,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 *.txt
+*.jpg
+*.下载
+*.css
+*.png
+*.html
+*.rar

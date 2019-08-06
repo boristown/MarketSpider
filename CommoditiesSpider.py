@@ -6,22 +6,22 @@ import datetime
 import time
 
 html_path = "HTML/"
-Commodities_path = os.path.join(html_path, "*Commodities*.htm")
+Commodities_path = os.path.join(html_path, "*Commodities*.htm*")
 #<td class="bold left plusIconTd noWrap elp"><a title="Tin Futures (CFD)" href="https://www.investing.com/commodities/tin">Tin</a><span class="alertBellGrayPlus js-plus-icon genToolTip oneliner" data-tooltip="Create Alert" data-name="Tin Futures" data-id="959209"></span></td>
 #Commodities_pattern = r'data-gae="sb_commodities-[^><"]+">([^><"]+)</a></td><td\sclass="lastNum pid-(\d+)-last"'
 Commodities_pattern = r'<td\sclass="bold\sleft\splusIconTd\snoWrap\selp"><a\stitle="[^><]+>([^><"]+)</a>.+?data-id="(\d+)"'
 dirs = glob.glob( Commodities_path )
 
-url = "https://www.investing.com/instruments/HistoricalDataAjax"
+url = "https://cn.investing.com/instruments/HistoricalDataAjax"
 
 headers = {
     'accept': "text/plain, */*; q=0.01",
-    'origin': "https://www.investing.com",
+    'origin': "https://cn.investing.com",
     'x-requested-with': "XMLHttpRequest",
     'user-agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
     'content-type': "application/x-www-form-urlencoded",
     'cache-control': "no-cache",
-    'postman-token': "17db1643-3ef6-fa9e-157b-9d5058f391e4"
+    'postman-token': "001488ed-8887-c84a-887c-ee407f04ea78"
     }
 
 lines_count = 0
@@ -32,7 +32,7 @@ for file_path in dirs:
     file_str = file.read()
     symbols_match = re.finditer(Commodities_pattern,file_str,re.S)
     symbol_index = 0
-    end_date_str = (datetime.datetime.utcnow() + datetime.timedelta(days = -1)).strftime("%m-%d-%Y").replace("-","%2F")
+    end_date_str = (datetime.datetime.utcnow() + datetime.timedelta(days = -1)).strftime("%Y-%m-%d").replace("-","%2F")
     for symbol_match in symbols_match:
         symbol_index+=1
         curr_id_str = symbol_match.group(2)
@@ -44,13 +44,13 @@ for file_path in dirs:
             continue
         row_count = 0
         symbols_count += 1
-        st_date_str = "12%2F31%2F1949"
+        st_date_str = "1949%2F12%2F31"
         candles_file = open(candles_filename, "w")
         candles_file.truncate()
         candles_line = ''
         while st_date_str != "null" and st_date_str != "":
             time.sleep(5)
-            payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=" + end_date_str + "&header=null&interval_sec=Daily&smlID=2057370&sort_col=date&sort_ord=DESC&st_date=" + st_date_str
+            payload = "action=historical_data&curr_id="+curr_id_str+"&end_date=" + end_date_str + "&header=null&interval_sec=Daily&smlID=25609848&sort_col=date&sort_ord=DESC&st_date=" + st_date_str
             print( payload )
             while True:
                 try:
@@ -71,7 +71,7 @@ for file_path in dirs:
                 if st_date_str == "":
                     row_next_date = row_date + datetime.timedelta(days = 1)
                     if row_next_date <= datetime.datetime.utcnow() + datetime.timedelta(days = -1):
-                        st_date_str = row_next_date.strftime("%m-%d-%Y").replace("-","%2F")
+                        st_date_str = row_next_date.strftime("%Y-%m-%d").replace("-","%2F")
                     else:
                         st_date_str = "null"
                 date_string =  row_date.strftime("%Y-%m-%d")
